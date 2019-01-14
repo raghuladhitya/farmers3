@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/parent_layout">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:id="@+id/image"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Farmer Name"
+        android:id="@+id/image_view"
+        android:layout_toRightOf="@+id/image"
+        android:textColor="#000"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_view"
+        android:layout_toRightOf="@id/image"
+        android:text="Farmer Location"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/farmer_loc"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="4dp"
+        android:layout_height="80dp"
+        android:id="@+id/barrier"
+        android:background="@color/GreyColor"
+        android:layout_toRightOf="@id/farmer_loc"
+        android:layout_margin="12dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/farmer_loc"
+        android:layout_toRightOf="@id/image"
+        android:id="@+id/Description"
+        android:layout_margin="5dp"
+        android:textSize="17sp"
+        android:text="Description" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/barrier"
+        android:layout_marginTop="12dp"
+        android:id="@+id/Goods_stock"
+        android:text="Goods in Stock" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Goods_stock"
+        android:layout_toRightOf="@id/barrier"
+        android:id="@+id/Details"
+        android:layout_marginTop="10dp"
+        android:text="Details"/>
+</RelativeLayout>
