@@ -1,20 +1,11 @@
 package com.example.android.farmers;
 
 public class Farmer {
-    private String name, description, Details;
+    private String name,description, Details;
     private String Stock;
     private String profilePic, Location;
 
-
-    public Farmer(String Location, String description, String Details,String name, String profilePic, String Stock) {
-        this.name = name;
-
-        this.Location = Location;
-        this.description = description;
-        this.profilePic = profilePic;
-        this.Stock = Stock;
-
-        this.Details = Details;
+    public Farmer() {
     }
 
     public String getName() {
@@ -49,14 +40,6 @@ public class Farmer {
         Stock = stock;
     }
 
-    public String getLocation() {
-        return Location;
-    }
-
-    public void setLocation(String location) {
-        Location = location;
-    }
-
     public String getProfilePic() {
         return profilePic;
     }
@@ -65,4 +48,21 @@ public class Farmer {
         this.profilePic = profilePic;
     }
 
+    public String getLocation() {
+        return Location;
+    }
+
+    public void setLocation(String location) {
+        Location = location;
+    }
+
+    public Farmer(String location, String description, String details, String name, String profilePic,String stock) {
+        this.name = name;
+        this.description = description;
+        Details = details;
+        Stock = stock;
+        this.profilePic = profilePic;
+        Location = location;
+
+    }
 }

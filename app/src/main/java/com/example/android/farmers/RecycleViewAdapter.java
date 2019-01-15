@@ -1,5 +1,6 @@
 package com.example.android.farmers;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,53 +14,55 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
+public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.MyViewHolder> {
 
-    ArrayList<Farmer> farmers;
+    public Context context;
+    public ArrayList<Farmer> f;
 
-    public RecycleViewAdapter(ArrayList<Farmer> farmers) {
-        this.farmers = farmers;
+    public RecycleViewAdapter(Context c,ArrayList<Farmer> farmers) {
+        context = c;
+        f = farmers;
+
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView image1;
-        TextView imageName,farmerLoc,bar,description,Stock,Detail;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            farmerLoc = (TextView) itemView.findViewById(R.id.farmer_loc);
-            image1 = (CircleImageView) itemView.findViewById(R.id.image);
-            bar = (TextView)itemView.findViewById(R.id.barrier);
-            Stock = (TextView)itemView.findViewById(R.id.Goods_stock);
-            description =(TextView) itemView.findViewById(R.id.Description);
-            imageName = (TextView)itemView.findViewById(R.id.image_view);
-            Detail = (TextView)itemView.findViewById(R.id.Details);
-        }
-    }
     @NonNull
     @Override
-    public RecycleViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-       View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_view,viewGroup,false);
-
-       return new ViewHolder(view);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+       return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_list_view,viewGroup,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleViewAdapter.ViewHolder viewHolder, int i) {
-        Farmer f = farmers.get(i);
-
-
-        viewHolder.imageName.setText(f.getProfilePic());
-        viewHolder.Detail.setText(f.getDetails());
-        viewHolder.Stock.setText(f.getStock());
-        viewHolder.description.setText(f.getDescription());
-        viewHolder.farmerLoc.setText(f.getLocation());
-        Picasso.get().load(f.getProfilePic()).into(viewHolder.image1);
+    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
+        viewHolder.farmerLoc.setText(f.get(i).getLocation());
+        viewHolder.description.setText(f.get(i).getDescription());
+        viewHolder.detail.setText(f.get(i).getDetails());
+        viewHolder.farmerName.setText(f.get(i).getName());
+        Picasso.get().load(f.get(i).getProfilePic()).into(viewHolder.imageView);
+        viewHolder.Stock.setText(f.get(i).getStock());
     }
 
     @Override
+
     public int getItemCount() {
         return 0;
+    }
+    public class MyViewHolder extends RecyclerView.ViewHolder{
+
+        CircleImageView imageView;
+        TextView farmerName,farmerLoc,bar,description,Stock,detail;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView = (CircleImageView) itemView.findViewById(R.id.image_no_1);
+
+            Stock = (TextView)itemView.findViewById(R.id.Gooods_stock);
+            description =(TextView) itemView.findViewById(R.id.Farmer_desc);
+            farmerName = (TextView)itemView.findViewById(R.id.Farmer_name);
+            detail = (TextView)itemView.findViewById(R.id.Details_no_1);
+            farmerLoc = (TextView) itemView.findViewById(R.id.Farmer_Loc);
+
+            bar = (TextView)itemView.findViewById(R.id.barrier);
+        }
     }
 }

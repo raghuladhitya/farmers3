@@ -2,68 +2,50 @@ package com.example.android.farmers;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity{
 
-    RecyclerView recyclerView;
-    RecycleViewAdapter recycleViewAdapter;
-    FirebaseDatabase db;
-    DatabaseReference dr;
-    ArrayList<Farmer> farmers;
+    private DatabaseReference databaseReference;
+    private RecyclerView recyclerView;
+    private RecycleViewAdapter recycleViewAdapter;
+    private ArrayList<Farmer> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager lm = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(lm);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),LinearLayoutManager.VERTICAL));
+        recyclerView = (RecyclerView)findViewById(R.id.RecyclerView);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Farmer");
 
-        farmers = new ArrayList<>();
-        recycleViewAdapter = new RecycleViewAdapter(farmers);
+        list = new ArrayList<Farmer>();
 
-        db = FirebaseDatabase.getInstance();
-        GetDataFirebase();
 
-    }
-    public void GetDataFirebase(){
-        dr = db.getReference("Farmer");
-        dr.addChildEventListener(new ChildEventListener() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Toast.makeText(getApplicationContext(), "loading..", Toast.LENGTH_LONG).show();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Farmer f =  dataSnapshot.getValue(Farmer.class);
-                farmers.add(f);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    Farmer f = dataSnapshot1.getValue(Farmer.class);
+                    list.add(f);
+                }
+                recycleViewAdapter = new RecycleViewAdapter(getApplicationContext(),list);
                 recyclerView.setAdapter(recycleViewAdapter);
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
@@ -72,6 +54,4 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-
-
 }
